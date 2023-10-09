@@ -4,6 +4,7 @@ import hero from "../Assets/images/hero.png";
 import admin from "../Assets/images/admin-icon.png";
 import doctor from "../Assets/images/doc-icon.png";
 import patient from "../Assets/images/log-icon.png";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const actions = [
@@ -37,13 +38,13 @@ const Home = () => {
       <div className='grid grid-cols-1 p-6 sm:grid-cols-3 gap-8 max-w-5xl mx-auto bg-white sm:-mt-28 shadow-xl z-10 relative rounded-2xl'>
         {actions.map(({ icon, title, sub }, ind) => (
           <div
-            className={`bg-sky-500 text-white rounded-[100px] p-5 flex items-center flex-col justify-center gap-2`}
+            className={`bg-sky-500 text-white rounded-[100px] p-5 flex items-center flex-col justify-center gap-2 text-center`}
             key={ind}
           >
             <img src={icon} className='' alt={title} />
             <h2 className='font-bold text-lg'>{title}</h2>
             <h4>{sub}</h4>
-            <button>Click Here</button>
+            <Link to='/login'>Click Here</Link>
           </div>
         ))}
       </div>
