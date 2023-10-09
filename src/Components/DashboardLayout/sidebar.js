@@ -10,8 +10,12 @@ import { BiLogOutCircle } from "react-icons/bi";
 const Sidebar = ({ closeSidebar }) => {
   const sidebarLinks = [
     { text: "Dashboard", link: "", img: dash },
-    { text: "Book Appointment", link: "make-transfer", img: book },
-    { text: "Appointment History", link: "active-transfer", img: appointment },
+    { text: "Book Appointment", link: "book-appointment", img: book },
+    {
+      text: "Appointment History",
+      link: "appointment-history",
+      img: appointment,
+    },
   ];
 
   return (

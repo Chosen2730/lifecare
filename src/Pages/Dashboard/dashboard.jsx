@@ -3,22 +3,40 @@ import HeaderCard from "../../Components/DashboardLayout/headerCard";
 import appoint from "../../Assets/images/appoint.png";
 import book2 from "../../Assets/images/book2.png";
 import profile from "../../Assets/images/profile.png";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigateTo = useNavigate();
   const dashActivity = [
-    { icon: profile, title: "My Profile", sub: "Update Profile" },
-    { icon: appoint, title: "My Appointment", sub: "View Appointment History" },
-    { icon: book2, title: "Book My Appointment", sub: "Book Appointment " },
+    {
+      icon: profile,
+      title: "My Profile",
+      sub: "Update Profile",
+      url: "profile",
+    },
+    {
+      icon: appoint,
+      title: "My Appointment",
+      sub: "View Appointment History",
+      url: "appointment-history",
+    },
+    {
+      icon: book2,
+      title: "Book My Appointment",
+      sub: "Book Appointment",
+      url: "book-appointment",
+    },
   ];
   return (
     <div className='text-white'>
-      <HeaderCard text='Book Appointment' />
+      <HeaderCard text='Dashboard' />
       <div className='p-5'>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-          {dashActivity.map(({ icon, title, sub }, ind) => (
+          {dashActivity.map(({ icon, title, sub, url }, ind) => (
             <div
               key={ind}
-              className='bg-white text-sky-500 flex flex-col items-center justify-center text-center p-4 rounded-xl'
+              onClick={() => navigateTo(url)}
+              className='bg-white text-sky-500 flex flex-col items-center justify-center text-center p-4 rounded-xl transition hover:bg-gray-100 cursor-pointer md:hover:scale-95 select-none'
             >
               <img
                 src={icon}
