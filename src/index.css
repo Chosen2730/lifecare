@@ -8,6 +8,27 @@ body {
   line-height: 1.5;
 }
 
+.overflowHide {
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.overflowHide::-webkit-scrollbar {
+  display: none;
+}
+
+.bg-grad {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(5, 5, 5, 1) 0%,
+      rgba(14, 14, 14, 0.658) 50%,
+      rgba(58, 58, 58, 0.465) 100%
+    ),
+    url(Assets/images//steth.png);
+  background-position: center;
+  background-attachment: fixed;
+}
+
 @layer components {
   .bg-gradient-custom {
     @apply bg-gradient-to-r from-blue-500 via-blue-700 to-blue-900;

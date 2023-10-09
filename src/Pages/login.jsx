@@ -2,9 +2,14 @@ import React from "react";
 import logo from "../Assets/images/logo.png";
 import loginImg from "../Assets/images/login-img.png";
 import icon from "../Assets/images/nav-icon.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigateTo = useNavigate();
+  const login = async (e) => {
+    e.preventDefault();
+    navigateTo("/dashboard");
+  };
   return (
     <div className='py-20 p-5'>
       <img src={logo} className='mx-auto w-20' alt='' />
@@ -17,7 +22,10 @@ const Login = () => {
           className='w-full min-h-[80vh] object-cover md:w-3/4 rounded-bl-[100px] hidden md:block'
           alt=''
         />
-        <div className='bg-white p-5 md:absolute top-0 right-0 bg-opacity-95'>
+        <form
+          onSubmit={login}
+          className='bg-white p-5 md:absolute top-0 right-0 bg-opacity-95'
+        >
           <div className='flex gap-4 items-center '>
             <img src={icon} alt='navigation' />
             <h2 className='text-2xl font-bold'>Login to your Account</h2>
@@ -60,7 +68,7 @@ const Login = () => {
               Sign up
             </Link>{" "}
           </h2>
-        </div>
+        </form>
       </div>
     </div>
   );
