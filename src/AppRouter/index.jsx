@@ -9,6 +9,11 @@ import Dashboard from "../Pages/Dashboard/dashboard";
 import Book from "../Pages/Dashboard/book";
 import History from "../Pages/Dashboard/history";
 import Profile from "../Pages/Dashboard/profile";
+import DoctorDashIndex from "../Pages/Doctor";
+import DoctorDashboard from "../Pages/Doctor/dashboard";
+import DoctorHistory from "../Pages/Doctor/history";
+import DoctorProfile from "../Pages/Doctor/profile";
+import DoctorSearch from "../Pages/Doctor/search";
 
 const AppRoutes = () => {
   return (
@@ -24,6 +29,12 @@ const AppRoutes = () => {
           <Route path='book-appointment' element={<Book />} />
           <Route path='appointment-history' element={<History />} />
           <Route path='profile' element={<Profile />} />
+        </Route>
+        <Route path='/doctor-dashboard' element={<DoctorDashIndex />}>
+          <Route index element={<DoctorDashboard />} />
+          <Route path='search' element={<DoctorSearch />} />
+          <Route path='appointment-history' element={<DoctorHistory />} />
+          <Route path='profile' element={<DoctorProfile />} />
         </Route>
 
         <Route path='*' element={<h2>404</h2>} />

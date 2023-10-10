@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "../../Components/DashboardLayout/sidebar";
-import Header from "../../Components/DashboardLayout/header";
+import Sidebar from "../../Components/DoctorDashLayout/sidebar";
+import Header from "../../Components/DoctorDashLayout/header";
 
-const DashIndex = () => {
+const DoctorDashIndex = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -33,4 +33,4 @@ const DashIndex = () => {
   );
 };
 
-export default DashIndex;
+export default DoctorDashIndex;

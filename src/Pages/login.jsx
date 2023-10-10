@@ -28,11 +28,14 @@ const Login = () => {
       console.log(res.data.user);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       localStorage.setItem("token", res.data.token);
-      if (role === "patient") {
-        setTimeout(() => {
+
+      setTimeout(() => {
+        if (role === "patient") {
           navigateTo("/dashboard");
-        }, 3000);
-      }
+        } else if (role === "doctor") {
+          navigateTo("/doctor-dashboard");
+        }
+      }, 3000);
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data.msg);

@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
-import HeaderCard from "../../Components/DashboardLayout/headerCard";
-import { useNavigate } from "react-router-dom";
+import HeaderCard from "../../Components/DoctorDashLayout/headerCard";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { baseUrl, config } from "../../Utils/Constants/constants";
 import { Spinner } from "react-activity";
 
-const Profile = () => {
+const DoctorProfile = () => {
   const [userInfo, setUserInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
   const [isCreated, setIsCreated] = useState(true);
+  const [allSpecializations, setAllSpecializations] = useState([]);
 
   const handleUserInfo = (e) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
 
   const getProfile = async () => {
-    setIsLoading(true);
-    const url = `${baseUrl}/patient`;
+    setLoading(true);
+    const url = `${baseUrl}/doctor`;
     try {
       const res = await axios.get(url, config(token));
 
@@ -29,24 +29,37 @@ const Profile = () => {
         setUserInfo({ ...user });
       } else {
         setIsCreated(true);
-        console.log("first");
-        setUserInfo({ ...res.data.patient });
+
+        setUserInfo({ ...res.data.doctor });
       }
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
+    }
+  };
+  const getSpecialization = async () => {
+    setLoading(true);
+    const url = `${baseUrl}/doctor/specializations`;
+    try {
+      const res = await axios.get(url, config(token));
+      setAllSpecializations(["select specialization", ...res.data]);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     getProfile();
+    getSpecialization();
   }, []);
 
   const createProfile = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const url = `${baseUrl}/patient`;
+    const url = `${baseUrl}/doctor`;
     try {
       const res = await axios.post(url, userInfo, config(token));
       toast.success("Profile successfully updated");
@@ -63,7 +76,7 @@ const Profile = () => {
   const updateProfile = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const url = `${baseUrl}/patient`;
+    const url = `${baseUrl}/doctor`;
     try {
       const res = await axios.patch(url, userInfo, config(token));
       toast.success("Profile successfully updated");
@@ -79,6 +92,14 @@ const Profile = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className='flex items-center justify-center my-10'>
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
     <div>
       <HeaderCard text='Profile' />
@@ -89,7 +110,7 @@ const Profile = () => {
         onSubmit={isCreated ? updateProfile : createProfile}
       >
         <h2 className='font-bold text-2xl text-sky-500 mb-10'>
-          Patient's Details
+          Doctor's Details
         </h2>
         <div className='grid grid-cols-1 xl:grid-cols-3 sm:grid-cols-2 gap-4'>
           <input
@@ -129,33 +150,7 @@ const Profile = () => {
             onChange={handleUserInfo}
             id=''
           />
-          <input
-            className='border-[1px] border-sky-500 block w-full p-3 mb-5'
-            type='number'
-            placeholder='Age'
-            name='age'
-            id=''
-            value={userInfo?.age || ""}
-            onChange={handleUserInfo}
-          />
-          <input
-            className='border-[1px] border-sky-500 block w-full p-3 mb-5'
-            type='text'
-            placeholder='State'
-            name='state'
-            id=''
-            value={userInfo?.state || ""}
-            onChange={handleUserInfo}
-          />
-          <input
-            className='border-[1px] border-sky-500 block w-full p-3 mb-5'
-            type='text'
-            placeholder='Marital Status'
-            name='maritalStatus'
-            value={userInfo?.maritalStatus || ""}
-            onChange={handleUserInfo}
-            id=''
-          />
+
           <input
             className='border-[1px] border-sky-500 block w-full p-3 mb-5'
             type='text'
@@ -167,7 +162,7 @@ const Profile = () => {
           />
           <input
             className='border-[1px] border-sky-500 block w-full p-3 mb-5'
-            type='text'
+            type='tel'
             placeholder='Phone Number'
             name='tel'
             id=''
@@ -176,31 +171,35 @@ const Profile = () => {
           />
           <input
             className='border-[1px] border-sky-500 block w-full p-3 mb-5'
-            type='tel'
-            placeholder='Emergency Contact'
-            name='emergencyContact'
+            type='number'
+            placeholder='Consultancy Fee'
+            name='consultFee'
             id=''
-            value={userInfo?.emergencyContact || ""}
+            value={userInfo?.consultFee || ""}
             onChange={handleUserInfo}
           />
           <input
             className='border-[1px] border-sky-500 block w-full p-3 mb-5'
-            type='text'
-            placeholder='Blood Group'
-            name='bloodGroup'
+            type='email'
+            placeholder='Consultancy Fee'
+            name='email'
             id=''
-            value={userInfo?.bloodGroup || ""}
-            onChange={handleUserInfo}
+            value={userInfo?.email}
+            readOnly
           />
-          <input
-            className='border-[1px] border-sky-500 block w-full p-3 mb-5'
-            type='text'
-            placeholder='Genotype'
-            name='genotype'
-            id=''
-            value={userInfo?.genotype || ""}
+          <select
+            className='border-[1px] border-sky-500 block w-full p-3 mb-5 capitalize'
+            name='specialization'
+            id='specialization'
+            value={userInfo?.specialization || ""}
             onChange={handleUserInfo}
-          />
+          >
+            {allSpecializations?.map((sp) => (
+              <option value={sp} key={sp}>
+                {sp}
+              </option>
+            ))}
+          </select>
         </div>
         <button
           type='submit'
@@ -209,9 +208,9 @@ const Profile = () => {
           {isLoading ? <Spinner /> : isCreated ? "Update" : " Submit"}
         </button>
       </form>
-      <ToastContainer />
+      <ToastContainer autoClose={3000} />
     </div>
   );
 };
 
-export default Profile;
+export default DoctorProfile;
