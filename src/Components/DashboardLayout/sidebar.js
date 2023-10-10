@@ -18,6 +18,10 @@ const Sidebar = ({ closeSidebar }) => {
     },
   ];
 
+  const logout = () => {
+    localStorage.clear();
+  };
+
   return (
     <div className='h-screen overflowHide bg-sky-500'>
       <div className='flex justify-between items-center p-8'>
@@ -47,10 +51,14 @@ const Sidebar = ({ closeSidebar }) => {
             </Link>
           );
         })}
-        <button className='bg-sky-500 text-white rounded-full shadow-md p-3 flex items-center gap-2 justify-center mt-20'>
+        <Link
+          to='/login'
+          onClick={logout}
+          className='bg-sky-500 text-white rounded-full shadow-md p-3 flex items-center gap-2 justify-center mt-20'
+        >
           <BiLogOutCircle />
           Logout
-        </button>
+        </Link>
       </div>
     </div>
   );
