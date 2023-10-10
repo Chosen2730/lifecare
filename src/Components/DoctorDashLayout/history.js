@@ -1,30 +1,34 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { baseUrl, config } from "../../Utils/Constants/constants";
+import axios from "axios";
+import { AiOutlineEdit } from "react-icons/ai";
 import { Spinner } from "react-activity";
-import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import SideModal from "../../Utils/Modals/sideModal";
 
-const SingleAppointment = ({ item, getHistory }) => {
-  const { status, date, time, doctor, _id: id } = item || {};
-  const { firstName, lastName, consultFee, specialization, surname } = doctor;
+const SingleHistory = ({ item, getHistory }) => {
+  const { status, date, time, patient: pat, _id: id } = item || {};
+  const [patient, setPatient] = useState({});
   const [isModalShown, setIsModalShown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const token = localStorage.getItem("token");
   const [newStatus, setNewStatus] = useState(status);
 
-  const deleteAppointment = async () => {
+  const getPatient = async () => {
     setIsLoading(true);
-    const url = `${baseUrl}/appointment/${id}`;
+    const url = `${baseUrl}/patient/${pat}`;
     try {
-      const res = await axios.delete(url, config(token));
-      getHistory();
+      const res = await axios.get(url, config(token));
+      setPatient(res.data.patient);
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    getPatient();
+  }, []);
 
   const updateAppointment = async () => {
     setIsLoading(true);
@@ -39,13 +43,16 @@ const SingleAppointment = ({ item, getHistory }) => {
     }
   };
 
+  const { firstName, lastName, tel, email, surname } = patient || {};
+
   return (
     <div className='rounded-md grid grid-cols-7 text-xs gap-2'>
       <h2>
         {firstName} {lastName} {surname}
       </h2>
-      <h2>{specialization}</h2>
-      <h2>{consultFee}</h2>
+
+      <h2>{email?.length > 20 ? `${email.slice(0, 20)}...` : email}</h2>
+      <h2>{tel}</h2>
       <h2>{date}</h2>
       <h2>{time}</h2>
       <h2
@@ -61,20 +68,6 @@ const SingleAppointment = ({ item, getHistory }) => {
       </h2>
       <div className='flex gap-2'>
         <button
-          onClick={deleteAppointment}
-          disabled={isLoading}
-          className='bg-red-100 flex items-center justify-center rounded-full p-2 text-red-600'
-        >
-          {isLoading ? (
-            <Spinner />
-          ) : (
-            <div className='flex items-center gap-1'>
-              <AiOutlineDelete />
-              Delete
-            </div>
-          )}
-        </button>
-        <button
           onClick={() => setIsModalShown(true)}
           disabled={isLoading}
           className='bg-blue-100 flex items-center justify-center rounded-full p-2 text-blue-600'
@@ -89,7 +82,6 @@ const SingleAppointment = ({ item, getHistory }) => {
           )}
         </button>
       </div>
-
       <SideModal
         visibilityState={isModalShown}
         closeModal={() => setIsModalShown(false)}
@@ -114,6 +106,8 @@ const SingleAppointment = ({ item, getHistory }) => {
             <option value=''>Change Status</option>
             <option value='pending'>pending</option>
             <option value='cancelled'>cancelled</option>
+            <option value='in progress'>in progress</option>
+            <option value='unavailable'>unavailable</option>
             <option value='completed'>completed</option>
           </select>
           <button
@@ -128,4 +122,4 @@ const SingleAppointment = ({ item, getHistory }) => {
   );
 };
 
-export default SingleAppointment;
+export default SingleHistory;

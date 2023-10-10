@@ -38,6 +38,7 @@ const DoctorProfile = () => {
       setLoading(false);
     }
   };
+
   const getSpecialization = async () => {
     setLoading(true);
     const url = `${baseUrl}/doctor/specializations`;

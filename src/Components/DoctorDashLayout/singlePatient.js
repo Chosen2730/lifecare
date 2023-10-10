@@ -1,7 +1,6 @@
 import React from "react";
 
 const SinglePatient = ({ item }) => {
-  console.log(item);
   const {
     address,
     age,

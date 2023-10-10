@@ -7,7 +7,7 @@ import { baseUrl, config } from "../../Utils/Constants/constants";
 import axios from "axios";
 
 const DoctorSearch = () => {
-  const [key, setKey] = useState("");
+  const [key, setKey] = useState("male");
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
@@ -31,7 +31,6 @@ const DoctorSearch = () => {
     try {
       const res = await axios.get(url, config(token));
       setPatients(res.data.patient);
-      console.log(res);
     } catch (error) {
       console.log(error);
     } finally {
@@ -60,8 +59,12 @@ const DoctorSearch = () => {
               name=''
               id=''
               onChange={(e) => setKey(e.target.value)}
-              placeholder='Enter search keyword (name, age, email, phone number etc)'
+              value={key}
+              placeholder='search'
             />
+            <p className='text-xs text-center my-1 text-sky-300'>
+              Enter search keyword (name, age, email, phone number etc)
+            </p>
           </div>
           <h2 className='text-lg text-sky-500 my-5 text-center'>
             Search Results
