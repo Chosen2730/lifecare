@@ -156,15 +156,16 @@ const Profile = () => {
             onChange={handleUserInfo}
             id=''
           />
-          <input
+          <select
             className='border-[1px] border-sky-500 block w-full p-3 mb-5'
-            type='text'
-            placeholder='Sex'
             name='sex'
             value={userInfo?.sex || ""}
             onChange={handleUserInfo}
-            id=''
-          />
+          >
+            <option value=''>Select</option>
+            <option value='male'>Male</option>
+            <option value='female'>Female</option>
+          </select>
           <input
             className='border-[1px] border-sky-500 block w-full p-3 mb-5'
             type='text'
