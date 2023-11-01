@@ -28,12 +28,14 @@ const Login = () => {
       console.log(res.data.user);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       localStorage.setItem("token", res.data.token);
-
+      console.log(role);
       setTimeout(() => {
         if (role === "patient") {
           navigateTo("/dashboard");
         } else if (role === "doctor") {
           navigateTo("/doctor-dashboard");
+        } else if (role === "admin") {
+          navigateTo("/admin-dashboard");
         }
       }, 3000);
     } catch (error) {

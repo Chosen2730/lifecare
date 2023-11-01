@@ -14,6 +14,11 @@ import DoctorDashboard from "../Pages/Doctor/dashboard";
 import DoctorHistory from "../Pages/Doctor/history";
 import DoctorProfile from "../Pages/Doctor/profile";
 import DoctorSearch from "../Pages/Doctor/search";
+import AdminDashIndex from "../Pages/Admin";
+import AdminDashboard from "../Pages/Admin/dashboard";
+import Doctors from "../Pages/Admin/doctors";
+import Patients from "../Pages/Admin/patients";
+import AdminHistory from "../Pages/Admin/history";
 
 const AppRoutes = () => {
   return (
@@ -29,6 +34,13 @@ const AppRoutes = () => {
           <Route path='book-appointment' element={<Book />} />
           <Route path='appointment-history' element={<History />} />
           <Route path='profile' element={<Profile />} />
+        </Route>
+        <Route path='/admin-dashboard' element={<AdminDashIndex />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path='search' element={<DoctorSearch />} />
+          <Route path='appointment-history' element={<AdminHistory />} />
+          <Route path='doctors' element={<Doctors />} />
+          <Route path='patients' element={<Patients />} />
         </Route>
         <Route path='/doctor-dashboard' element={<DoctorDashIndex />}>
           <Route index element={<DoctorDashboard />} />
