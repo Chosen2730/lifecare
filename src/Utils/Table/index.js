@@ -35,13 +35,13 @@ const Table = ({
           {children}
         </TableBody>
       </div>
-      <div className='flex justify-between gap-4 items-center p-8'>
+      {/* <div className='flex justify-between gap-4 items-center p-8'>
         <button
           // onClick={prevpage}
           disabled={loadingState}
           className='flex items-center gap-2 bg-sky-50 rounded-full p-2 px-6 text-sm'
         >
-          <GrChapterPrevious /> Prev
+          <GrChapterPrevious />
         </button>
         <span className='block bg-gray-100 rounded-full p-2 text-sm px-6'>
           Page {1}
@@ -51,9 +51,9 @@ const Table = ({
           // onClick={nextPage}
           className='flex items-center gap-2 bg-sky-50 rounded-full p-2 px-6 text-sm'
         >
-          Next <GrChapterNext />
+          <GrChapterNext />
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

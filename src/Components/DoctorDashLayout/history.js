@@ -30,7 +30,8 @@ const SingleHistory = ({ item, getHistory }) => {
     getPatient();
   }, []);
 
-  const updateAppointment = async () => {
+  const updateAppointment = async (e) => {
+    e.preventDefault();
     setIsLoading(true);
     const url = `${baseUrl}/appointment/${id}`;
     try {
@@ -40,6 +41,7 @@ const SingleHistory = ({ item, getHistory }) => {
       console.log(error);
     } finally {
       setIsLoading(false);
+      setIsModalShown(false);
     }
   };
 

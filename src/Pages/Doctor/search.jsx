@@ -31,6 +31,7 @@ const DoctorSearch = () => {
     try {
       const res = await axios.get(url, config(token));
       setPatients(res.data.patient);
+      console.log(res);
     } catch (error) {
       console.log(error);
     } finally {
