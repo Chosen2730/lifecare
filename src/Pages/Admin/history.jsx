@@ -5,6 +5,7 @@ import History from "../Dashboard/history";
 import SingleHistory from "../../Components/DoctorDashLayout/history";
 import { baseUrl, config } from "../../Utils/Constants/constants";
 import axios from "axios";
+import SingleAdminHistory from "../../Components/AdminDashLayout/history";
 
 const AdminHistory = () => {
   const [history, setHistory] = useState([]);
@@ -18,20 +19,17 @@ const AdminHistory = () => {
     "Date",
     "Time",
     "Status",
-    "Action",
+    "Doctor's Name",
+    "Doctor's Email",
+    "Doctor's Tel",
   ];
 
   const getHistory = async () => {
     setLoading(true);
-    const url1 = `${baseUrl}/doctor`;
+    const url = `${baseUrl}/appointment/all`;
 
     try {
-      const doctor = await axios.get(url1, config(token));
-      const id = doctor.data.doctor?._id;
-      const url = `${baseUrl}/appointment/${id}`;
       const res = await axios.get(url, config(token));
-      // const url3 = `${baseUrl}/patient/${}`;
-      // const pat = await axios.get(url, config(token));
       setHistory(res.data.appointments);
     } catch (error) {
       console.log(error);
@@ -50,14 +48,18 @@ const AdminHistory = () => {
       <h2 className='font-bold text-white my-10'>View Appointment History</h2>
       <Table
         loadingState={loading}
-        cols='7'
-        minSize='1000px'
+        cols='9'
+        minSize='1500px'
         headerContent={header}
         data={history}
       >
         {history?.map((item, index) => (
           <div key={index}>
-            <SingleHistory getHistory={getHistory} item={item} index={index} />
+            <SingleAdminHistory
+              getHistory={getHistory}
+              item={item}
+              index={index}
+            />
             <hr className='my-4 border-green-50' />
           </div>
         ))}

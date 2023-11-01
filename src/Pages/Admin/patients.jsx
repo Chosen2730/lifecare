@@ -12,13 +12,9 @@ const Patients = () => {
 
   const header = ["Name", "Email", "Tel", "Gender", "Age"];
 
-  const getHistory = async () => {
+  const getPatients = async () => {
     setLoading(true);
-    const url1 = `${baseUrl}/doctor`;
-
     try {
-      const doctor = await axios.get(url1, config(token));
-      const id = doctor.data.doctor?._id;
       const url = `${baseUrl}/patient/all`;
       const res = await axios.get(url, config(token));
       setPatients(res.data.patients);
@@ -30,7 +26,7 @@ const Patients = () => {
   };
 
   useEffect(() => {
-    getHistory();
+    getPatients();
   }, []);
 
   return (
@@ -46,7 +42,7 @@ const Patients = () => {
       >
         {patients?.map((item, index) => (
           <div key={index}>
-            <SinglePatient getHistory={getHistory} item={item} index={index} />
+            <SinglePatient item={item} index={index} />
             <hr className='my-4 border-green-50' />
           </div>
         ))}
